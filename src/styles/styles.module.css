@@ -1,0 +1,93 @@
+:root {
+  --main-color: #777;
+  --main-border-R: 0.25em;
+  --main-border: 0.05em solid var(--main-color);
+}
+.container {
+  position: relative;
+  width: 20em;
+  min-height: 1.5em;
+  border: var(--main-border);
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em;
+  border-radius: 0.25em;
+  outline: none;
+}
+
+.value {
+  flex-grow: 1;
+}
+
+.container:focus {
+  border-color: hsl(200, 100%, 50%);
+}
+
+.clear-btn {
+  background-color: transparent;
+  color: var(--main-color);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 2em;
+  transition: 0.3s;
+}
+
+.clear-btn:focus,
+.clear-btn:hover {
+  color: #333;
+}
+
+.divider {
+  background-color: var(--main-color);
+  width: 0.05em;
+  /*
+  we used the align-self instead of hieght: 100% cus we have a min-hight on the container
+  so the broswer doesn't know what 100% of the heigh acutully is
+  */
+  align-self: stretch;
+}
+
+.caret {
+  transform: translateY(25%);
+  border: 0.4em solid transparent;
+  border-top-color: var(--main-color);
+}
+
+.options {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  border: var(--main-border);
+  border-radius: var(--main-border-R);
+  max-height: 15em;
+  overflow-y: auto;
+  width: 100%;
+  top: calc(100% + 0.5em);
+  left: 0;
+  background-color: white;
+  z-index: 100;
+  text-align: start;
+  display: none;
+}
+
+.options.show {
+  display: block;
+}
+
+.option {
+  padding: 0.5em;
+  cursor: pointer;
+}
+
+.option.highlighted {
+  background-color: hsl(200, 100%, 50%);
+  color: white;
+}
+
+.option.selected {
+  background-color: hsl(200, 100%, 70%);
+}
