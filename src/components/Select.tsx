@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SelectOption, SelectOptionMProps, SelectProps } from "../types/types";
 import styles from "./../styles/styles.module.css";
 
 const Select = ({ multiple, value, options, onChange }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const clearBtnHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -32,9 +33,46 @@ const Select = ({ multiple, value, options, onChange }: SelectProps) => {
   useEffect(() => {
     setHighlightedIndex(0);
   }, [isOpen]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.target != containerRef.current) return;
+      switch (e.code) {
+        case "Enter":
+        case "Space":
+          setIsOpen((prev) => !prev);
+          if (isOpen) selectOption(options[highlightedIndex]);
+          break;
+        case "ArrowUp":
+        case "ArrowDown": {
+          if (!isOpen) {
+            setIsOpen(true);
+            break;
+          }
+          const newValue = highlightedIndex + (e.code === "ArrowDown" ? 1 : -1);
+          if (newValue >= 0 && newValue < options.length) {
+            setHighlightedIndex(newValue);
+          }
+          break;
+        }
+        case "Escape":
+          setIsOpen(false);
+          break;
+      }
+    };
+
+    containerRef.current?.addEventListener("keydown", handler);
+
+    return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      containerRef.current?.removeEventListener("keydown", handler);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, highlightedIndex, options]);
   return (
     //   using the tab index to apply the focus for the contianer
     <div
+      ref={containerRef}
       tabIndex={0}
       className={styles.container}
       onClick={() => setIsOpen((prev) => !prev)}
