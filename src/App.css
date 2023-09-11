@@ -5,3 +5,15 @@
   text-align: center;
 }
 
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 20px;
+}
+@media (max-width: 767px) {
+  .App {
+    flex-direction: column;
+    gap: 100px;
+  }
+}

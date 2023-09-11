@@ -34,6 +34,7 @@ const Select = ({ multiple, value, options, onChange }: SelectProps) => {
     setHighlightedIndex(0);
   }, [isOpen]);
 
+  // Key board accessibility
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.target != containerRef.current) return;
