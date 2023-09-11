@@ -51,9 +51,9 @@
 }
 
 .caret {
-  transform: translateY(25%);
   border: 0.4em solid transparent;
   border-top-color: var(--main-color);
+  transform: translateY(25%);
 }
 
 .options {

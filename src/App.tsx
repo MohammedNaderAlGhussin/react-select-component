@@ -1,5 +1,7 @@
+import { useState } from "react";
 import "./App.css";
 import Select from "./components/Select";
+import { SelectOption } from "./types/types";
 
 const options = [
   { label: "first", value: 1 },
@@ -10,9 +12,10 @@ const options = [
 ];
 
 function App() {
+  const [value, setValue] = useState<SelectOption | undefined>(options[0]);
   return (
     <div>
-      <Select options={options} />
+      <Select options={options} value={value} onChange={(o) => setValue(o)} />
     </div>
   );
 }
